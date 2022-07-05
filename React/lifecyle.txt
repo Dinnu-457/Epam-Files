@@ -1,0 +1,91 @@
+#using lifecycle and fetching the json data using async await
+import React from "react";
+import axios from "axios";
+import User from "./User";
+import Test from "./Test";
+// Axios is a Javascript library used to make HTTP requests from node. 
+//js or XMLHttpRequests from the browser and it supports the Promise API that is native to JS ES6.
+class App extends React.Component{
+  constructor(props){
+    super(props);
+    this.state={
+      count:0,
+      users:[],
+      loading:true,
+      error:false
+    }
+  }
+
+  Count=()=>{
+    //destructuring
+    const {count:c}=this.state;
+    //setState is used to change state value
+    this.setState({
+      count:c+1
+    })
+  }
+
+ async componentDidMount(){
+    console.log("initiated");
+    try{
+      const res=await axios.get("https://jsonplaceholder.typicode.com/users");
+      console.log("res>>>>>",res);
+      this.setState({
+        users:res.data,
+        loading:false,
+        error:false
+      })
+    }
+    catch(ex){
+        this.setState({
+          users:[],
+          loading:false,
+          error:true
+        })
+    }
+    
+  }
+  componentDidUpdate(){
+    console.log("Updating");
+  }
+
+  render(){
+    //destructuring 
+    const {loading,error,users}=this.state;
+    return(
+      <>
+      <h1>Counter</h1>
+      <button onClick={this.Count}>Counter:{this.state.count}</button>
+      <Test/>
+      <User loading={loading} error={error} users={users}/>
+      </>
+      
+    )
+    //render method would be called whenever state will be changed
+  }
+   
+}
+export default App;
+
+
+
+Test.js
+import {PureComponent} from "react";
+
+//To optimize react component 
+//so we are extending PureComponent like it checks all props
+//PureComponent Is Primarily Used for Performance Optimization.
+//it helps in stop rerendering until we pass a value empty
+//like <Test users={[]}>
+class Test extends PureComponent{
+    constructor(props){
+        super(props);
+    }
+    render(){
+        console.log("in render::::child component");
+        return(
+            <h1>Test</h1>
+        )
+    }
+}
+export default Test;

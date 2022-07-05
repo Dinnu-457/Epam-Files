@@ -1,0 +1,39 @@
+import React from "react";
+import { useState,useMemo } from "react";
+
+const Func=()=>{
+
+    const [counter,setCounter]=useState(5);
+ 
+    //const fact=factorial(counter);
+
+    //if we use useMemo infinite times rerendering will be stopped which helps in code optimization
+
+    const facto=useMemo(()=>{factorial(counter)},[]);
+
+    return(
+        <div>
+        <center>
+        <h1>You clicked {factorial(counter)} times</h1>
+        <h2>{facto}</h2>
+        <button onClick={()=>setCounter(counter+1)}>change</button>
+        </center>
+        </div>
+    );
+
+    function factorial(number){
+        let fact=1;
+        if(number==0 || number==1){
+            return fact;
+        }
+        else{
+            for(let i=number;i>0;i--){
+                fact=fact*i;
+            }
+        }
+        console.log(`I am in factorial${fact}`);
+        return fact;
+        
+    }
+}
+export default Func;

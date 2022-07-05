@@ -1,0 +1,116 @@
+#component example
+import React from "react";
+
+class App extends React.Component{
+  
+  state={
+    vid:670,
+    vname:"Dinesh"
+  };
+
+ 
+  render(){
+    return(
+      <h1>{this.state.vid}:{this.state.vname}</h1>
+    )
+  }
+}
+
+export default App;
+
+
+#component using in other component
+
+function Name(){
+  let name="dinesh";
+  return <h1>{name}</h1>
+}
+function App(){
+return(
+  <Name />
+)
+}
+export default App;
+
+
+#event
+
+function App(){
+  return (
+    <button onClick={shoot("Hiiii Dinesh")}>Hiii</button>
+  )
+}
+function shoot(argu){
+  alert("clicked a button,"+argu);
+}
+export default App;
+
+#event example
+import {Component} from 'react';
+class App extends Component{
+constructor(props){
+  super(props);
+  this.state={
+    counter:0
+  }
+}
+  
+
+  Increment=()=>{
+    const {counter:c}=this.state;
+    //setstate is a inbuilt method where it helps in updating state values
+    //here u cant do this.state.counter++;
+    //so u took setstate function and incremented the c value
+    //whenever u click it comes here and counter variable is substitued by c like destructuring took place
+    this.setState({
+      counter:c+1
+    })
+    }
+
+  render(){
+  return (
+  <>  
+  <button onClick={this.Increment}>Increment</button>
+  <span>counter:{this.state.counter}</span>
+  </>
+  )
+}
+}
+export default App;
+
+
+#both increment and decremenet
+
+import {Component} from 'react';
+class App extends Component{
+constructor(props){
+  super(props);
+  this.state={
+    counter:0
+  }
+}
+  
+
+  Handler=(num)=>{
+    const {counter:c}=this.state;
+    this.setState({    
+      counter:c+num
+    })
+
+    }
+
+  render(){
+  return (
+  <>  
+  <button onClick={()=>this.Handler(1)}>Increment</button>
+  <br></br>
+  <button onClick={()=>this.Handler(-1)}>Decrement</button>
+  <br></br>
+  <span>counter:{this.state.counter}</span>
+  </>
+  )
+}
+}
+export default App;
+
+

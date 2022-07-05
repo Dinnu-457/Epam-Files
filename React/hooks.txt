@@ -1,0 +1,51 @@
+import axios from "axios";
+import {useState,useEffect, useCallback} from "react";
+import User from "./User";
+import Child from "./Child";
+
+const AppTest=()=>{
+
+    //ArrayDestructuring
+    const [name,setName]=useState("Dinesh");
+    const [counter,setCounter]=useState({
+        c:0,
+        test:5
+    });
+    const[users,setUsers]=useState([]);
+    // useEffect(()=>console.log("clicked"),[counter]);
+
+    //fetching api using async and await
+    const fetchUser=async()=>{
+        try{
+            const res=await axios.get("https://jsonplaceholder.typicode.com/users");
+            setUsers(res.data);
+        }
+        catch(ex){
+    setUsers([]);
+        }
+    
+    }
+    //we are calling api when counter value is greater than >=5  
+
+    //useEffect(()=>{if(counter>=5){fetchUser()}},[counter]);
+
+    //if u dont pass any 2nd argument it would execute infinte no. of times
+    useEffect(()=>{fetchUser()});
+
+    const demo=useCallback(()=>{
+        console.log("I am testing whether it is rerendering or not");
+    },[]);
+
+    //therefore there will be no furthur rerendering in Child as we have written useCallback
+    //like whenever it rerender the reference will be changed
+    //below we used spread operator as it keeps the value of 2nd argument in it
+    return(
+        <>
+        <Child demo={demo}/>
+        <h1>You clicked {counter.c} times</h1>
+        <button onClick={()=>setCounter({...counter,c:counter.c+1})}>change</button>
+        <User users={users}/>
+        </>
+    )
+};
+export default AppTest;

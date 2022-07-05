@@ -1,0 +1,77 @@
+
+#componentWillUnmount
+import React from "react";
+
+class App extends React.Component{
+
+  constructor(props){
+    super(props);
+  }
+
+  state={
+    header:true,
+    c:0
+  };
+
+Delete=()=>{
+    var btn=document.getElementById('a');
+    btn.innerHTML='';
+}
+componentWillUnmount(){
+  console.log("deleted header");
+}
+render(){
+    return(
+      <div>
+      <center>
+      <h1 id='a'>Hello World</h1>
+      <button onClick={this.Delete}>Delete</button>
+      </center>
+      </div>
+    )
+  }
+
+
+}
+export default App;
+
+#ComponentDidMount and ComponentDidUpdate
+
+import React from "react";
+
+class App extends React.Component{
+  constructor(props){
+    super(props);
+    this.state={
+      count:0
+    }
+  }
+
+  Count=()=>{
+    //destructuring
+    const {count:c}=this.state;
+    //setState is used to change state value
+    this.setState({
+      count:c+1
+    })
+  }
+
+  componentDidMount(){
+    console.log("initiated");
+  }
+  componentDidUpdate(){
+    console.log("Updating");
+  }
+
+  render(){
+    return(
+      <>
+      <h1>Counter</h1>
+      <button onClick={this.Count}>Counter:{this.state.count}</button>
+      </>
+      
+    )
+  }
+   
+}
+export default App;

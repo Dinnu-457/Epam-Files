@@ -1,0 +1,28 @@
+import {Component} from "react";
+
+//To optimize react component 
+//so we are extending PureComponent like it checks all props
+//PureComponent Is Primarily Used for Performance Optimization.
+//it helps in stop rerendering until we pass a value empty
+//like <Test users={[]}> because when we pass an empty array there will be a new reference so it will rerender again 
+class Test extends Component{
+    constructor(props){
+        super(props);
+    }
+    //basically shouldComponentUpdate is used to stop rerendering continusoly
+    //when u are using shouldComponentUpdate then u should nt extend pureComponent
+    shouldComponentUpdate(nextProps,nextState){
+        console.log("should component upadte");
+        if(nextProps.num.length===this.props.num.length){
+            return false;
+        }
+        return true;
+    }
+    render(){
+        console.log("in render::::child component");
+        return(
+            <h1>Test</h1>
+        )
+    }
+}
+export default Test;
